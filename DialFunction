@@ -1,0 +1,73 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class RotaryEncoderBasic : MonoBehaviour
+{
+    // --- Rotary Encoder config ---
+    [Header("Encoder buttons (Gamepad)")]
+    public int buttonA = 3;  // "joystick button 3"
+    public int buttonB = 4;  // "joystick button 4"
+
+    [Header("Dial output")]
+    public Slider targetSlider;   // assign in Inspector - this is what we controlled in our game environment. Change to whatever you want to control
+    public float stepAmount = 0.05f; // how much to step per dial turn, out of 1.
+
+    private int prevState = 0;
+
+    void Update()
+    {
+        // Read current button states (exposed by Unity as "joystick button N")
+        bool a = Input.GetKey("joystick button " + buttonA);
+        bool b = Input.GetKey("joystick button " + buttonB);
+
+        // Pack the two bits into 0..3
+        int currentState = (a ? 1 : 0) | (b ? 2 : 0);
+
+        // Decode direction from previous state to current (Gray code sequence)
+        int delta = GetRotationDelta(prevState, currentState);
+        if (delta != 0)
+        {
+            OnRotate(delta);
+        }
+
+        prevState = currentState;
+    }
+
+    // Gray code decoder: returns -1 (CCW), 0 (no change/invalid), +1 (CW)
+    int GetRotationDelta(int prev, int curr)
+    {
+        if (prev == curr) return 0;
+
+        // Valid CW sequence: 00->01->11->10->00
+        if ((prev == 0 && curr == 1) ||
+            (prev == 1 && curr == 3) ||
+            (prev == 3 && curr == 2) ||
+            (prev == 2 && curr == 0))
+            return +1;
+
+        // Valid CCW sequence: 00->10->11->01->00
+        if ((prev == 0 && curr == 2) ||
+            (prev == 2 && curr == 3) ||
+            (prev == 3 && curr == 1) ||
+            (prev == 1 && curr == 0))
+            return -1;
+
+        // Any other jump (e.g., 00->11) ignore
+        return 0;
+    }
+
+    void OnRotate(int direction)
+    {
+        if (!targetSlider)
+        {
+            Debug.LogError("[RotaryEncoderBasic] No Slider assigned.");
+            return;
+        }
+
+        targetSlider.value = Mathf.Clamp(
+            targetSlider.value + stepAmount * direction,
+            targetSlider.minValue,
+            targetSlider.maxValue
+        );
+    }
+}
