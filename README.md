@@ -1,7 +1,13 @@
 # Dial-Controller-For-Unity
-Instructions on how we built a dial controller to use in Unity to track real-time FMS/Discomfort Score. Has many other practical use cases as well. <br>
+<b> Instructions on how we built a dial controller to use in Unity to track real-time FMS/Discomfort Score. Has many other practical use cases as well. <br>
+Created for CyberScore project at VRAC at Iowa State University. <br>
+Project members: Stephen J. Fieffer, Alexa Hatcher, Ghazal ShahAbadi, Jacob Becker, Jake Shaheen, Michael C. Dorneich, Stephen B. Gilbert </b><br>
+
+https://github.com/user-attachments/assets/531f2698-b040-4594-8165-f1b4c811e7ca
+<div style="text-align: center;">
 
 ![IMG_7600_small](https://github.com/user-attachments/assets/22fa0731-2201-4b28-871f-dacfbc05186e)
+</div>
 
 ## Hardware
 Rotary Encoder with Push Switch - https://www.ricmotech.com/rotary-encoder-with-push-switch-diy
@@ -13,7 +19,8 @@ Jumper wire connectors – A male to female wire would be most efficient. Howeve
 We purchased both items from the RicmoTech website linked above (not affiliated). There is an option for a rotary encoder without a push switch for $1 cheaper that you could purchase – we did not use the push switch in our build.
 
 ## Software
-The file “DialFunction.cs” contains the Unity script that gives the dial functionality within any Unity projects.
+The file “DialFunction.cs” contains the Unity script that gives the dial functionality within any Unity projects.<br>
+The "Slider" folder contains the slider prefab, associated images, and script to use the slider with the faces. This can be easily modified to use other images. Attach the Slider prefab to a Canvas element in the Unity scene.
 
 ## How To
 Connect the dial to the button board through male-to-female connector wires as seen in the diagram below. Connect the outer two pins to button board inputs, and the middle pin to ground. <br>
