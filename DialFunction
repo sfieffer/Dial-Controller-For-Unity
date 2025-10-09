@@ -58,16 +58,13 @@ public class RotaryEncoderBasic : MonoBehaviour
 
     void OnRotate(int direction)
     {
-        if (!targetSlider)
+        if (targetSlider == null)
         {
-            Debug.LogError("[RotaryEncoderBasic] No Slider assigned.");
+            Debug.LogError("Slider not assigned in the Inspector for RotaryEncoder!");
             return;
         }
-
-        targetSlider.value = Mathf.Clamp(
-            targetSlider.value + stepAmount * direction,
-            targetSlider.minValue,
-            targetSlider.maxValue
-        );
+        targetSlider.value += stepAmount * direction;
+        Debug.Log("Slider value: " + targetSlider.value);
     }
 }
+
